@@ -1,0 +1,422 @@
+/* RESET + BASE */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* MAIN LAYOUT */
+  .login-container {
+    min-height: 100vh;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  
+  /* LEFT PANEL */
+  .login-left {
+    padding: 60px 80px;
+    color: #fff;
+    background: linear-gradient(180deg, #7c5cff 0%, #6b47ff 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* BRAND */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 1;
+  }
+  
+  .brand-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .brand-text {
+    font-size: 26px;
+    font-weight: 700;
+  }
+  
+  /* LEFT CONTENT */
+  .left-content {
+    max-width: 600px;
+    z-index: 1;
+  }
+  
+  .left-content h1 {
+    font-size: 62px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  
+  .left-content p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+  }
+  
+  /* TRUST */
+  .trust {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    z-index: 1;
+  }
+  
+  .avatars {
+    display: flex;
+  }
+  
+  .avatars div {
+    width: 50px;
+    height: 50px;
+    margin-left: -10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(124, 92, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .avatars div:first-child {
+    margin-left: 0;
+  }
+  
+  .trust span {
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  /* RIGHT PANEL */
+  .login-right {
+    background: #ececec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  
+  /* LOGIN CARD WRAPPER */
+  .login-card {
+    width: 100%;
+    max-width: 520px;
+  }
+  
+  /* TEXT ABOVE CLERK CARD */
+  .login-card h2 {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+  }
+  
+  .subtitle {
+    color: #737373;
+    margin-bottom: 40px;
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  
+  /* MOBILE BRAND */
+  .mobile-brand {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #7c5cff;
+  }
+  
+  .mobile-brand svg {
+    color: #7c5cff;
+  }
+  
+  /* CLERK CARD CONTAINER - Make it look like a white card */
+  .clerk-card {
+    padding: 40px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e5e5 !important;
+  }
+  
+  .clerk-rootBox {
+    width: 100%;
+  }
+  
+  /* Hide Clerk's default headers since we have our own */
+  .clerk-headerTitle,
+  .clerk-header__title {
+    display: none !important;
+  }
+  
+  .clerk-headerSubtitle,
+  .clerk-header__subtitle {
+    display: none !important;
+  }
+  
+  /* Clerk Internal Card Header */
+  .cl-internal-b3fm6y {
+    text-align: center !important;
+    margin-bottom: 24px !important;
+  }
+  
+  .cl-internal-b3fm6y h1 {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .cl-internal-b3fm6y p {
+    font-size: 15px !important;
+    color: #737373 !important;
+  }
+  
+  /* Social Buttons (Google) */
+  .clerk-socialButtonsBlockButton,
+  .cl-socialButtonsBlockButton,
+  .cl-socialButtonsBlockButton__google {
+    border: 1px solid #d4d4d4 !important;
+    background: #ffffff !important;
+    color: #374151 !important;
+    padding: 14px 16px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+  }
+  
+  .clerk-socialButtonsBlockButton:hover,
+  .cl-socialButtonsBlockButton:hover {
+    background: #fafafa !important;
+    border-color: #c4c4c4 !important;
+  }
+  
+  /* Divider */
+  .clerk-dividerRow,
+  .cl-dividerRow {
+    margin: 24px 0 !important;
+  }
+  
+  .clerk-dividerLine,
+  .cl-dividerLine {
+    background: #d4d4d4 !important;
+    height: 1px !important;
+  }
+  
+  .clerk-dividerText,
+  .cl-dividerText {
+    color: #737373 !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    text-transform: lowercase !important;
+    padding: 0 12px !important;
+  }
+  
+  /* Form Fields */
+  .clerk-formFieldLabel,
+  .cl-formFieldLabel {
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+  }
+  
+  .clerk-formFieldInput,
+  .cl-formFieldInput,
+  .cl-formFieldInput[type="text"],
+  .cl-formFieldInput[type="email"],
+  .cl-formFieldInput[type="password"] {
+    border-radius: 8px !important;
+    padding: 13px 14px !important;
+    border: 1px solid #d4d4d4 !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    color: #1a1a1a !important;
+  }
+  
+  .clerk-formFieldInput:focus,
+  .cl-formFieldInput:focus {
+    border-color: #7c5cff !important;
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1) !important;
+    outline: none !important;
+  }
+  
+  .clerk-formFieldInput::placeholder,
+  .cl-formFieldInput::placeholder {
+    color: #a3a3a3 !important;
+  }
+  
+  /* Primary Button (Continue/Sign In) */
+  .clerk-formButtonPrimary,
+  .cl-formButtonPrimary {
+    background: #7c5cff !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 14px 16px !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+  }
+  
+  .clerk-formButtonPrimary:hover,
+  .cl-formButtonPrimary:hover {
+    background: #6b47ff !important;
+  }
+  
+  /* Footer Links */
+  .clerk-footerActionLink,
+  .cl-footerActionLink,
+  .clerk-footerAction__link,
+  .cl-footerAction__link {
+    color: #7c5cff !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+  
+  .clerk-footerActionLink:hover,
+  .cl-footerActionLink:hover {
+    color: #6b47ff !important;
+    text-decoration: underline !important;
+  }
+  
+  .clerk-footerActionText,
+  .cl-footerActionText {
+    color: #737373 !important;
+    font-size: 14px !important;
+  }
+  
+  /* Clerk Badge */
+  .clerk-badge,
+  .cl-badge {
+    margin-top: 24px !important;
+  }
+  
+  /* Custom Footer Below Clerk Card */
+  .footer-text {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #737373;
+    font-weight: 400;
+  }
+  
+  .footer-text span {
+    color: #7c5cff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .footer-text span:hover {
+    color: #6b47ff;
+    text-decoration: underline;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 1400px) {
+    .left-content h1 {
+      font-size: 54px;
+    }
+    
+    .login-right {
+      padding: 60px 80px;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .left-content h1 {
+      font-size: 48px;
+    }
+    
+    .login-left {
+      padding: 50px 60px;
+    }
+    
+    .login-right {
+      padding: 50px 60px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .login-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .login-left {
+      display: none;
+    }
+  
+    .login-right {
+      width: 100%;
+      padding: 60px 40px;
+      background: #f5f5f5;
+    }
+  
+    .mobile-brand {
+      display: flex;
+    }
+  
+    .login-card {
+      max-width: 500px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .login-right {
+      padding: 40px 24px;
+    }
+  
+    .login-card h2 {
+      font-size: 36px;
+    }
+  
+    .subtitle {
+      font-size: 16px;
+    }
+    
+    .clerk-card {
+      padding: 32px 24px !important;
+    }
+  }
