@@ -1,9 +1,9 @@
-import { SignIn } from "@clerk/clerk-react";
+import { SignUp } from "@clerk/clerk-react";
 import { Zap, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
-import "../../Styles/login.css";
+import "../../Styles/signup.css";
 
-const Login = () => {
+const Signup = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -16,67 +16,68 @@ const Login = () => {
   }, []);
 
   return (
-    <div className="login-container">
-      {/* LEFT PANEL */}
-      <div className="login-left">
+    <div className="signup-container">
+      {/* LEFT BRAND PANEL */}
+      <div className="signup-left">
+        <div className="bg-circle bg-circle-1"></div>
+        <div className="bg-circle bg-circle-2"></div>
+
         <div className="brand">
           <div className="brand-icon">
-            <Zap size={28} strokeWidth={2.5} />
+            <Zap size={26} />
           </div>
           <span className="brand-text">TaskFlow</span>
         </div>
 
         <div className="left-content">
-          <h1>Manage your agency's social media work in one place</h1>
+          <h1>
+            Join your agency's <br /> social media workspace
+          </h1>
           <p>
-            Track tasks, store post proofs, and monitor progress across all your clients.
+            Create an account to collaborate with your team, manage tasks, and
+            track social media progress across all clients.
           </p>
         </div>
 
         <div className="trust">
-          <div className="avatars">
-            <div>AJ</div>
-            <div>SC</div>
-            <div>MR</div>
-            <div>EW</div>
-          </div>
-          <span>Trusted by 500+ agencies</span>
+          <span>Used by modern digital agencies</span>
         </div>
       </div>
 
-      {/* RIGHT PANEL */}
-      <div className="login-right">
-        <div className="login-card">
+      {/* RIGHT SIGNUP PANEL */}
+      <div className="signup-right">
+        <div className="signup-card">
           <div className="mobile-brand">
-            <Zap size={24} strokeWidth={2.5} />
+            <Zap size={22} />
             <span>TaskFlow</span>
           </div>
 
-          <h2>Welcome back</h2>
+          <h2>Create your account</h2>
           <p className="subtitle">
             Get started with your agency workspace
           </p>
+
           {isLoading ? (
             <div className="loading-container">
               <Loader2 className="loading-spinner" size={32} />
               <p className="loading-text">Please wait...</p>
             </div>
           ) : (
-            <SignIn
+            <SignUp
               routing="path"
-              path="/login"
+              path="/signup"
               appearance={{
                 elements: {
                   card: "clerk-card",
-                  rootBox: "clerk-rootBox",
                   headerTitle: "hidden",
                   headerSubtitle: "hidden",
-                  socialButtonsBlockButton: "clerk-socialButtonsBlockButton",
-                  formButtonPrimary: "clerk-formButtonPrimary",
-                  formFieldInput: "clerk-formFieldInput",
-                  formFieldLabel: "clerk-formFieldLabel",
-                  dividerLine: "clerk-dividerLine",
-                  dividerText: "clerk-dividerText",
+                  socialButtonsBlockButton: "clerk-google-btn",
+                  formButtonPrimary: "clerk-primary-btn",
+                  formFieldInput: "clerk-input",
+                  formFieldLabel: "clerk-label",
+                  dividerLine: "clerk-divider",
+                  dividerText: "clerk-divider-text",
+                  footerActionLink: "clerk-footer-link",
                 },
               }}
             />
@@ -87,4 +88,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

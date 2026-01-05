@@ -1,25 +1,27 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../src/pages/auth/Login";
-import AuthGuard from "../src/components/auth/AuthGuard";
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import AuthGuard from "./components/auth/AuthGuard";
 
 const Dashboard = () => <h1>Dashboard</h1>;
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <Routes>
+      {/* Auth routes */}
+      <Route path="/login/*" element={<Login />} />
+      <Route path="/signup/*" element={<Signup />} />
 
-        <Route
-          path="/"
-          element={
-            <AuthGuard>
-              <Dashboard />
-            </AuthGuard>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      {/* Protected route */}
+      <Route
+        path="/"
+        element={
+          <AuthGuard>
+            <Dashboard />
+          </AuthGuard>
+        }
+      />
+    </Routes>
   );
 }
 

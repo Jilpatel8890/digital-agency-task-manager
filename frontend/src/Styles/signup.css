@@ -1,0 +1,468 @@
+/* RESET + BASE */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* MAIN LAYOUT */
+  .signup-container {
+    min-height: 100vh;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  
+  /* LEFT PANEL */
+  .signup-left {
+    padding: 40px 60px;
+    color: #fff;
+    background: linear-gradient(180deg, #7c5cff 0%, #6b47ff 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* BRAND */
+  .signup-left .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 1;
+  }
+  
+  .signup-left .brand-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .signup-left .brand-text {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  
+  /* LEFT CONTENT */
+  .signup-left .left-content {
+    max-width: 600px;
+    z-index: 1;
+  }
+  
+  .signup-left .left-content h1 {
+    font-size: 52px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  
+  .signup-left .left-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+  }
+  
+  /* TRUST */
+  .signup-left .trust {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    z-index: 1;
+  }
+  
+  .signup-left .trust span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+  
+  /* BACKGROUND CIRCLES */
+  .bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+  }
+  
+  .bg-circle-1 {
+    width: 400px;
+    height: 400px;
+    top: -100px;
+    right: -100px;
+  }
+  
+  .bg-circle-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    left: -80px;
+  }
+  
+  /* RIGHT PANEL */
+  .signup-right {
+    background: #ececec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+  
+  /* SIGNUP CARD WRAPPER */
+  .signup-card {
+    width: 100%;
+    max-width: 480px;
+  }
+  
+  /* TEXT ABOVE CLERK CARD */
+  .signup-card h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+  }
+  
+  .signup-card .subtitle {
+    color: #737373;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  
+  /* MOBILE BRAND */
+  .signup-card .mobile-brand {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: #7c5cff;
+  }
+  
+  .signup-card .mobile-brand svg {
+    color: #7c5cff;
+  }
+  
+  /* CLERK CARD CONTAINER */
+  .signup-card .clerk-card {
+    padding: 28px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    border: 1px solid #e5e5e5 !important;
+  }
+  
+  .signup-card .clerk-rootBox {
+    width: 100%;
+  }
+  
+  /* Hide Clerk's default headers */
+  .signup-card .clerk-headerTitle,
+  .signup-card .clerk-header__title {
+    display: none !important;
+  }
+  
+  .signup-card .clerk-headerSubtitle,
+  .signup-card .clerk-header__subtitle {
+    display: none !important;
+  }
+  
+  /* Clerk Internal Card Header */
+  .signup-card .cl-internal-b3fm6y {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .signup-card .cl-internal-b3fm6y h1 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .signup-card .cl-internal-b3fm6y p {
+    font-size: 14px !important;
+    color: #737373 !important;
+  }
+  
+  /* Social Buttons (Google) */
+  .signup-card .clerk-socialButtonsBlockButton,
+  .signup-card .cl-socialButtonsBlockButton,
+  .signup-card .clerk-google-btn {
+    border: 1px solid #d4d4d4 !important;
+    background: #ffffff !important;
+    color: #374151 !important;
+    padding: 12px 14px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+  }
+  
+  .signup-card .clerk-socialButtonsBlockButton:hover,
+  .signup-card .cl-socialButtonsBlockButton:hover,
+  .signup-card .clerk-google-btn:hover {
+    background: #fafafa !important;
+    border-color: #c4c4c4 !important;
+  }
+  
+  /* Divider */
+  .signup-card .clerk-dividerRow,
+  .signup-card .cl-dividerRow {
+    margin: 18px 0 !important;
+  }
+  
+  .signup-card .clerk-dividerLine,
+  .signup-card .cl-dividerLine,
+  .signup-card .clerk-divider {
+    background: #d4d4d4 !important;
+    height: 1px !important;
+  }
+  
+  .signup-card .clerk-dividerText,
+  .signup-card .cl-dividerText,
+  .signup-card .clerk-divider-text {
+    color: #737373 !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+    text-transform: lowercase !important;
+    padding: 0 12px !important;
+  }
+  
+  /* Form Fields */
+  .signup-card .clerk-formFieldLabel,
+  .signup-card .cl-formFieldLabel,
+  .signup-card .clerk-label {
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    font-size: 13px !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+  }
+  
+  .signup-card .clerk-formFieldInput,
+  .signup-card .cl-formFieldInput,
+  .signup-card .clerk-input,
+  .signup-card .cl-formFieldInput[type="text"],
+  .signup-card .cl-formFieldInput[type="email"],
+  .signup-card .cl-formFieldInput[type="password"] {
+    border-radius: 8px !important;
+    padding: 11px 12px !important;
+    border: 1px solid #d4d4d4 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    color: #1a1a1a !important;
+  }
+  
+  .signup-card .clerk-formFieldInput:focus,
+  .signup-card .cl-formFieldInput:focus,
+  .signup-card .clerk-input:focus {
+    border-color: #7c5cff !important;
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1) !important;
+    outline: none !important;
+  }
+  
+  .signup-card .clerk-formFieldInput::placeholder,
+  .signup-card .cl-formFieldInput::placeholder,
+  .signup-card .clerk-input::placeholder {
+    color: #a3a3a3 !important;
+  }
+  
+  /* Primary Button (Continue/Sign Up) */
+  .signup-card .clerk-formButtonPrimary,
+  .signup-card .cl-formButtonPrimary,
+  .signup-card .clerk-primary-btn {
+    background: #7c5cff !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+  }
+  
+  .signup-card .clerk-formButtonPrimary:hover,
+  .signup-card .cl-formButtonPrimary:hover,
+  .signup-card .clerk-primary-btn:hover {
+    background: #6b47ff !important;
+  }
+  
+  /* Footer Links */
+  .signup-card .clerk-footerActionLink,
+  .signup-card .cl-footerActionLink,
+  .signup-card .clerk-footer-link,
+  .signup-card .clerk-footerAction__link,
+  .signup-card .cl-footerAction__link {
+    color: #7c5cff !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+  
+  .signup-card .clerk-footerActionLink:hover,
+  .signup-card .cl-footerActionLink:hover,
+  .signup-card .clerk-footer-link:hover {
+    color: #6b47ff !important;
+    text-decoration: underline !important;
+  }
+  
+  .signup-card .clerk-footerActionText,
+  .signup-card .cl-footerActionText {
+    color: #737373 !important;
+    font-size: 13px !important;
+  }
+  
+  /* Clerk Badge */
+  .signup-card .clerk-badge,
+  .signup-card .cl-badge {
+    margin-top: 18px !important;
+  }
+  
+  /* Custom Footer Below Clerk Card */
+  .signup-card .footer-text {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    color: #737373;
+    font-weight: 400;
+  }
+  
+  .signup-card .footer-text a {
+    color: #7c5cff;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .signup-card .footer-text a:hover {
+    color: #6b47ff;
+    text-decoration: underline;
+  }
+  
+  /* LOADING STATE */
+  .signup-card .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e5e5;
+  }
+
+  .signup-card .loading-spinner {
+    color: #7c5cff;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .signup-card .loading-text {
+    margin-top: 16px;
+    font-size: 16px;
+    color: #737373;
+    font-weight: 500;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1400px) {
+    .signup-left .left-content h1 {
+      font-size: 48px;
+    }
+    
+    .signup-right {
+      padding: 40px 60px;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .signup-left .left-content h1 {
+      font-size: 44px;
+    }
+    
+    .signup-left {
+      padding: 40px 50px;
+    }
+    
+    .signup-right {
+      padding: 40px 50px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .signup-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .signup-left {
+      display: none;
+    }
+  
+    .signup-right {
+      width: 100%;
+      padding: 60px 40px;
+      background: #f5f5f5;
+    }
+  
+    .signup-card .mobile-brand {
+      display: flex;
+    }
+  
+    .signup-card {
+      max-width: 500px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .signup-right {
+      padding: 40px 24px;
+    }
+  
+    .signup-card h2 {
+      font-size: 32px;
+    }
+  
+    .signup-card .subtitle {
+      font-size: 15px;
+    }
+    
+    .signup-card .clerk-card {
+      padding: 24px 20px !important;
+    }
+  }
