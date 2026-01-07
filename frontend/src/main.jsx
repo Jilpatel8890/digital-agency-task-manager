@@ -4,11 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import ClerkProviderWrapper from "../src/providers/ClerkProvider";
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ClerkProviderWrapper>
-        <App />
+      
+      <App />
+        
       </ClerkProviderWrapper>
     </BrowserRouter>
   </React.StrictMode>

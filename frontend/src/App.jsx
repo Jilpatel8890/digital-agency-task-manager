@@ -2,17 +2,21 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import AuthGuard from "./components/auth/AuthGuard";
-
-const Dashboard = () => <h1>Dashboard</h1>;
-
+import SyncUser from "./components/auth/SyncUser";
+import Dashboard from "./components/auth/Dashboard";
+import ClientsPage from "./components/auth/Client";
 function App() {
   return (
+
+    <>
+      
+      <SyncUser />
     <Routes>
       {/* Auth routes */}
       <Route path="/login/*" element={<Login />} />
       <Route path="/signup/*" element={<Signup />} />
-
-      {/* Protected route */}
+      
+      <Route path="/client" element={<ClientsPage />} />
       <Route
         path="/"
         element={
@@ -22,6 +26,8 @@ function App() {
         }
       />
     </Routes>
+
+    </>
   );
 }
 
