@@ -1,38 +1,25 @@
-import { useEffect, useRef } from "react";
-import { useAuth, useUser } from "@clerk/clerk-react";
+import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 
 const SyncUser = () => {
-  const { isSignedIn, getToken } = useAuth();
-  const { user, isLoaded } = useUser();
-  const synced = useRef(false); // 🔥 prevent multiple calls
+  const { isSignedIn, isLoaded, getToken } = useAuth();
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn || !user || synced.current) return;
+    if (!isLoaded || !isSignedIn) return;
 
-    const syncUser = async () => {
-      try {
-        const token = await getToken();
+    const sync = async () => {
+      const token = await getToken(); // ✅ NO TEMPLATE
 
-        if (!token) {
-          console.warn("No token yet, skipping sync");
-          return;
-        }
-
-        await fetch("http://localhost:5000/api/auth/sync-user", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        synced.current = true;
-      } catch (error) {
-        console.error("User sync failed", error);
-      }
+      await fetch("http://localhost:5000/api/auth/sync-user", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     };
 
-    syncUser();
-  }, [isLoaded, isSignedIn, user]);
+    sync();
+  }, [isLoaded, isSignedIn]);
 
   return null;
 };

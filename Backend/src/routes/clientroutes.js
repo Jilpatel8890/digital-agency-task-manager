@@ -1,5 +1,5 @@
 import express from "express";
-import { clerkAuth } from "../middleware/clerkAuth.js";
+import  clerkAuth  from "../middleware/clerkAuth.js";
 import { loadUser } from "../middleware/loaduser.js";
 import { requireRole } from "../middleware/requireRole.js";
 

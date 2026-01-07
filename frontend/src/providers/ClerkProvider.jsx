@@ -10,8 +10,7 @@ const ClerkProviderWrapper = ({ children }) => {
       navigate={(to) => navigate(to)}
       signInUrl="/login"
       signUpUrl="/signup"
-      afterSignInUrl="/"
-      afterSignUpUrl="/"
+      fallbackRedirectUrl="/"
     >
       {children}
     </ClerkProvider>

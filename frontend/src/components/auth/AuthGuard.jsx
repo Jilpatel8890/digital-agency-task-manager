@@ -5,6 +5,7 @@ import WaitingApproval from "../../pages/auth/WaitingApproval";
 
 const AuthGuard = ({ children }) => {
   const { isSignedIn, isLoaded, getToken } = useAuth();
+
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
 
@@ -13,7 +14,7 @@ const AuthGuard = ({ children }) => {
 
     const fetchUser = async () => {
       try {
-        const token = await getToken();
+        const token = await getToken(); // ✅ NO TEMPLATE
 
         const res = await fetch("http://localhost:5000/api/protected/me", {
           headers: {
@@ -36,23 +37,11 @@ const AuthGuard = ({ children }) => {
     fetchUser();
   }, [isLoaded, isSignedIn]);
 
-  /* ---------- STATES ---------- */
-
   if (!isLoaded) return null;
+  if (!isSignedIn) return <Navigate to="/login" replace />;
+  if (loading) return <div>Loading...</div>;
+  if (!userData?.approved) return <WaitingApproval />;
 
-  if (!isSignedIn) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (loading) {
-    return <div>Loading...</div>; // can replace with spinner
-  }
-
-  if (!userData?.approved) {
-    return <WaitingApproval />;
-  }
-
-  /* ---------- AUTHORIZED ---------- */
   return children;
 };
 

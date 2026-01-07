@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { useAuth } from "@clerk/clerk-react";
+import { NavLink } from "react-router-dom";
 import {
   fetchClients,
   createClient,
@@ -154,28 +155,43 @@ const ClientsPage = () => {
         </div>
 
         <nav className="nav">
-          <a className="nav-item">Dashboard</a>
-          <a className="nav-item">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+          >
+            Dashboard
+          </NavLink>
+
+          <NavLink to="/tasks" className="nav-item">
             <CheckSquare size={20} /> Tasks
-          </a>
-          <a className="nav-item active">
+          </NavLink>
+
+          <NavLink
+            to="/client"
+            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+          >
             <Building2 size={20} /> Clients
-          </a>
-          <a className="nav-item">
+          </NavLink>
+
+          <NavLink to="/users" className="nav-item">
             <Users size={20} /> Users
-          </a>
-          <a className="nav-item">
+          </NavLink>
+
+          <NavLink to="/calendar" className="nav-item">
             <Calendar size={20} /> Calendar
-          </a>
-          <a className="nav-item">
+          </NavLink>
+
+          <NavLink to="/analytics" className="nav-item">
             <TrendingUp size={20} /> Analytics
-          </a>
+          </NavLink>
         </nav>
 
         <div className="sidebar-footer">
-          <a className="nav-item">
+          <NavLink to="/settings" className="nav-item">
             <Settings size={20} /> Settings
-          </a>
+          </NavLink>
+
           <div className="user-profile">
             <div className="user-avatar">AT</div>
             <div className="user-info">
@@ -196,6 +212,7 @@ const ClientsPage = () => {
               Manage your agency's clients and projects
             </p>
           </div>
+
           <button className="btn-primary" onClick={() => setShowModal(true)}>
             <Plus size={16} /> Add Client
           </button>
@@ -281,41 +298,6 @@ const ClientsPage = () => {
                 />
               </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Phone</label>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Website</label>
-                <input
-                  type="url"
-                  value={formData.website}
-                  onChange={(e) =>
-                    setFormData({ ...formData, website: e.target.value })
-                  }
-                />
-              </div>
-
               <div className="modal-actions">
                 <button
                   type="button"
@@ -326,7 +308,11 @@ const ClientsPage = () => {
                   Cancel
                 </button>
                 <button className="btn-primary" disabled={submitting}>
-                  {submitting ? "Saving..." : editingClient ? "Update Client" : "Add Client"}
+                  {submitting
+                    ? "Saving..."
+                    : editingClient
+                    ? "Update Client"
+                    : "Add Client"}
                 </button>
               </div>
             </form>
