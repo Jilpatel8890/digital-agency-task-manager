@@ -1,5 +1,5 @@
 import express from "express";
-import { clerkAuth } from "../middleware/clerkAuth.js";
+import clerkAuth from "../middleware/clerkAuth.js";
 import { loadUser } from "../middleware/loaduser.js";
 import { requireRole } from "../middleware/requireRole.js";
 import User from "../models/user.js";
@@ -22,6 +22,40 @@ router.get(
   }
 );
 
+router.post(
+  "/",
+  clerkAuth,
+  loadUser,
+  requireRole(["admin"]),
+  async (req, res) => {
+    try {
+      const { name, email, role, approved } = req.body;
+
+      if (!name || !email) {
+        return res.status(400).json({ message: "Name and email are required" });
+      }
+
+      // Check if user with email already exists
+      const existingUser = await User.findOne({ email: email.toLowerCase() });
+      if (existingUser) {
+        return res.status(400).json({ message: "User with this email already exists" });
+      }
+
+      const user = await User.create({
+        name,
+        email: email.toLowerCase(),
+        role: role || null,
+        approved: approved !== undefined ? approved : false,
+      });
+
+      res.status(201).json(user);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Failed to create user" });
+    }
+  }
+);
+
 router.put(
   "/:id",
   clerkAuth,
@@ -29,13 +63,14 @@ router.put(
   requireRole(["admin"]),
   async (req, res) => {
     try {
-      const { approved, role } = req.body;
+      const { name, approved, role } = req.body;
 
       const user = await User.findById(req.params.id);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
 
+      if (name !== undefined) user.name = name;
       if (approved !== undefined) user.approved = approved;
       if (role !== undefined) user.role = role;
 

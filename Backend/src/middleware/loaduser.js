@@ -2,6 +2,10 @@ import User from "../models/user.js";
 
 export const loadUser = async (req, res, next) => {
   try {
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     const clerkUserId = req.auth.userId;
 
     const user = await User.findOne({ clerkUserId });

@@ -41,9 +41,6 @@ const ClientsPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     industry: "",
-    email: "",
-    phone: "",
-    website: "",
   });
 
   /* ================= FETCH CLIENTS ================= */
@@ -109,9 +106,6 @@ const ClientsPage = () => {
     setFormData({
       name: client.name || "",
       industry: client.industry || "",
-      email: client.email || "",
-      phone: client.phone || "",
-      website: client.website || "",
     });
     setShowModal(true);
   };
@@ -122,9 +116,6 @@ const ClientsPage = () => {
     setFormData({
       name: "",
       industry: "",
-      email: "",
-      phone: "",
-      website: "",
     });
   };
 
@@ -141,6 +132,20 @@ const ClientsPage = () => {
     return parts.length >= 2
       ? (parts[0][0] + parts[1][0]).toUpperCase()
       : name.slice(0, 2).toUpperCase();
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    const month = date.toLocaleString("default", { month: "short" });
+    const year = date.getFullYear();
+    return `${month} ${year}`;
+  };
+
+  const getActiveTasksCount = (client) => {
+    // TODO: Fetch from backend when tasks API is ready
+    // For now, return 0 as default
+    return 0;
   };
 
   return (
@@ -174,7 +179,7 @@ const ClientsPage = () => {
             <Building2 size={20} /> Clients
           </NavLink>
 
-          <NavLink to="/users" className="nav-item">
+          <NavLink to="/team" className="nav-item">
             <Users size={20} /> Users
           </NavLink>
 
@@ -235,28 +240,70 @@ const ClientsPage = () => {
           </div>
         ) : (
           <div className="clients-grid">
-            {filteredClients.map((client) => (
-              <div key={client._id} className="client-card">
-                <div className="client-card-header">
-                  <div className="client-icon">
-                    {getInitials(client.name)}
-                  </div>
-                  <div className="client-actions">
-                    <button onClick={() => handleEdit(client)}>
-                      <Edit2 size={16} />
-                    </button>
-                    <button onClick={() => handleDelete(client._id)}>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                <h3 className="client-name">{client.name}</h3>
-                <p className="client-industry">
-                  {client.industry || "No industry"}
+            {filteredClients.length === 0 ? (
+              <div className="empty-state">
+                <Building2 size={64} className="empty-icon" />
+                <p className="empty-text">No clients found</p>
+                <p className="empty-subtext">
+                  {searchQuery
+                    ? "Try adjusting your search query"
+                    : "Get started by adding your first client"}
                 </p>
               </div>
-            ))}
+            ) : (
+              filteredClients.map((client) => {
+                const activeTasksCount = getActiveTasksCount(client);
+                const entryDate = formatDate(client.createdAt);
+
+                return (
+                  <div key={client._id} className="client-card">
+                    <div className="client-card-header">
+                      <div className="client-icon">
+                        <Building2 size={20} />
+                      </div>
+                      <div className="client-actions">
+                        <button
+                          className="client-action-btn"
+                          onClick={() => handleEdit(client)}
+                          title="Edit client"
+                        >
+                          <Edit2 size={16} />
+                        </button>
+                        <button
+                          className="client-action-btn client-action-btn-danger"
+                          onClick={() => handleDelete(client._id)}
+                          title="Delete client"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="client-info">
+                      <h3 className="client-name">{client.name}</h3>
+                      {client.industry && (
+                        <p className="client-industry">{client.industry}</p>
+                      )}
+                    </div>
+
+                    <div className="client-meta">
+                      <div className="client-date">
+                        <Calendar size={14} />
+                        <span>{entryDate}</span>
+                      </div>
+                      <div className="client-tasks">
+                        <span className="client-tasks-count">
+                          {activeTasksCount}
+                        </span>
+                        <span className="client-tasks-label">
+                          {activeTasksCount === 1 ? "active task" : "active tasks"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         )}
       </main>
@@ -288,13 +335,14 @@ const ClientsPage = () => {
               </div>
 
               <div className="form-group">
-                <label>Industry</label>
+                <label>Industry *</label>
                 <input
                   type="text"
                   value={formData.industry}
                   onChange={(e) =>
                     setFormData({ ...formData, industry: e.target.value })
                   }
+                  required
                 />
               </div>
 

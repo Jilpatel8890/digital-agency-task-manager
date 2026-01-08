@@ -5,6 +5,8 @@ import AuthGuard from "./components/auth/AuthGuard";
 import SyncUser from "./components/auth/SyncUser";
 import Dashboard from "./components/auth/Dashboard";
 import ClientsPage from "./components/auth/Client";
+import TeamPage from "./components/auth/Team";
+import Task from "./components/auth/Task";
 
 function App() {
   return (
@@ -29,6 +31,24 @@ function App() {
           element={
             <AuthGuard>
               <ClientsPage />
+            </AuthGuard>
+          }
+        />
+
+        <Route
+          path="/team"
+          element={
+            <AuthGuard>
+              <TeamPage />
+            </AuthGuard>
+          }
+        />
+
+        <Route
+          path="/tasks"
+          element={
+            <AuthGuard>
+              <Task />
             </AuthGuard>
           }
         />

@@ -4,17 +4,28 @@ import { Navigate } from "react-router-dom";
 import WaitingApproval from "../../pages/auth/WaitingApproval";
 
 const AuthGuard = ({ children }) => {
-  const { isSignedIn, isLoaded, getToken } = useAuth();
-
+  const { isLoaded, isSignedIn, getToken } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
 
-    const fetchUser = async () => {
+    const fetchUser = async (retries = 3) => {
       try {
-        const token = await getToken(); // ✅ NO TEMPLATE
+        const token = await getToken({ skipCache: true });
+        
+        if (!token) {
+          if (retries > 0) {
+            // Wait a bit and retry if token is not available yet
+            setTimeout(() => fetchUser(retries - 1), 500);
+            return;
+          }
+          console.warn("No token available for user fetch after retries");
+          setUser(null);
+          setLoading(false);
+          return;
+        }
 
         const res = await fetch("http://localhost:5000/api/protected/me", {
           headers: {
@@ -22,25 +33,24 @@ const AuthGuard = ({ children }) => {
           },
         });
 
-        if (!res.ok) throw new Error("Unauthorized");
+        if (!res.ok) throw new Error();
 
-        const data = await res.json();
-        setUserData(data);
-      } catch (err) {
-        console.error("AuthGuard error:", err);
-        setUserData(null);
-      } finally {
+        setUser(await res.json());
+        setLoading(false);
+      } catch (error) {
+        console.error("Fetch user error:", error);
+        setUser(null);
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [isLoaded, isSignedIn]);
+  }, [isLoaded, isSignedIn, getToken]);
 
   if (!isLoaded) return null;
   if (!isSignedIn) return <Navigate to="/login" replace />;
   if (loading) return <div>Loading...</div>;
-  if (!userData?.approved) return <WaitingApproval />;
+  if (!user?.approved) return <WaitingApproval />;
 
   return children;
 };

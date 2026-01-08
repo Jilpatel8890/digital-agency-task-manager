@@ -2,10 +2,10 @@
   "name": "digital-agency-backend",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "Index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon Index.js",
+    "start": "node Index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +13,11 @@
   "description": "Backend for Digital Agency Task Manager",
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.23",
+    "@clerk/express": "^1.7.61",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.2"
   },
   "devDependencies": {

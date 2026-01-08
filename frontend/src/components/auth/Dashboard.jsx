@@ -110,7 +110,7 @@ const Dashboard = () => {
             Clients
           </NavLink>
 
-          <NavLink to="/users" className="nav-item">
+          <NavLink to="/team" className="nav-item">
             <Users size={20} />
             Users
           </NavLink>
