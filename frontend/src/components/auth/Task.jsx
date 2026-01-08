@@ -240,7 +240,7 @@ const Task = () => {
           </NavLink>
 
           <NavLink
-            to="/calendar"
+            to="/calender"
             className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
           >
             <Calendar size={20} />

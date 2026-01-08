@@ -115,7 +115,7 @@ const Dashboard = () => {
             Users
           </NavLink>
 
-          <NavLink to="/calendar" className="nav-item">
+          <NavLink to="/calender" className="nav-item">
             <Calendar size={20} />
             Calendar
           </NavLink>

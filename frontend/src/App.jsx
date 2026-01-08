@@ -7,7 +7,7 @@ import Dashboard from "./components/auth/Dashboard";
 import ClientsPage from "./components/auth/Client";
 import TeamPage from "./components/auth/Team";
 import Task from "./components/auth/Task";
-
+import Calender from "./components/auth/Calender";
 function App() {
   return (
     <>
@@ -49,6 +49,14 @@ function App() {
           element={
             <AuthGuard>
               <Task />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/calender"
+          element={
+            <AuthGuard>
+              <Calender />
             </AuthGuard>
           }
         />
