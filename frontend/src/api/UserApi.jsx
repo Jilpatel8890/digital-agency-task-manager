@@ -88,3 +88,24 @@ export const deleteUser = async (id, token) => {
   return res.json();
 };
 
+export const inviteUser = async (id, token) => {
+  const res = await fetch(`${API_BASE}/invite/${id}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    let errorMessage = "Failed to send invitation";
+    try {
+      const error = await res.json();
+      errorMessage = error.message || errorMessage;
+    } catch (e) {
+      errorMessage = `Request failed with status ${res.status}`;
+    }
+    throw new Error(errorMessage);
+  }
+  return res.json();
+};
+

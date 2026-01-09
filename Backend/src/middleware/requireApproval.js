@@ -3,7 +3,7 @@ export const requireApproval = (req, res, next) => {
   
     if (!publicMetadata?.approved) {
       return res.status(403).json({
-        message: "Account not approved by admin",
+        message: "Account not approved by manager",
       });
     }
   

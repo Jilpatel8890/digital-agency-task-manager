@@ -57,7 +57,7 @@ const WaitingApproval = () => {
           <h2>Account Pending Approval</h2>
           <p className="waiting-description">
             Your account has been created successfully and is currently waiting
-            for admin approval.
+            for manager approval.
           </p>
 
           {/* Info Box */}
@@ -66,7 +66,7 @@ const WaitingApproval = () => {
             <div className="waiting-info-text">
               <strong>What happens next?</strong>
               <span>
-                An administrator will review your account within 24–48 hours.
+                A manager will review your account within 24–48 hours.
               </span>
             </div>
           </div>

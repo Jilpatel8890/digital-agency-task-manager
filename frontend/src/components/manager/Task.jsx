@@ -17,6 +17,7 @@ import {
 
 import { NavLink } from "react-router-dom";
 import { useAuth, useUser, SignOutButton } from "@clerk/clerk-react";
+import Sidebar from "../auth/Sidebar";
 
 import {
   fetchTasks,
@@ -32,15 +33,6 @@ import "../../Styles/task.css";
 
 const Task = () => {
   const { getToken } = useAuth();
-  const { user } = useUser();
-
-  /* ================= USER INFO ================= */
-  const fullName = user?.fullName || "User";
-  const initials = fullName
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
 
   /* ================= STATE ================= */
   const [tasks, setTasks] = useState([]);
@@ -55,6 +47,7 @@ const Task = () => {
   const [selectedFilter, setSelectedFilter] = useState("All");
 
   const [formData, setFormData] = useState({
+    taskname: "",
     client_id: "",
     assigned_to: "",
     platform: "Instagram",
@@ -87,7 +80,7 @@ const Task = () => {
       setClients(clientRes.filter((c) => c.isActive));
       setUsers(
         userRes.filter(
-          (u) => u.role === "team" && u.approved && u.isActive
+          (u) => ["content writer", "graphic designer", "social media manager"].includes(u.role) && u.approved && u.isActive
         )
       );
     } catch (err) {
@@ -138,6 +131,7 @@ const Task = () => {
   const handleEdit = (task) => {
     setEditingTask(task);
     setFormData({
+      taskname: task.taskname || "",
       client_id: task.client_id?._id || task.client_id,
       assigned_to: task.assigned_to?._id || task.assigned_to,
       platform: task.platform,
@@ -154,6 +148,7 @@ const Task = () => {
     setShowModal(false);
     setEditingTask(null);
     setFormData({
+      taskname: "",
       client_id: "",
       assigned_to: "",
       platform: "Instagram",
@@ -196,85 +191,7 @@ const Task = () => {
   /* ================= UI ================= */
   return (
     <div className="app">
-      {/* ================= SIDEBAR ================= */}
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="logo">
-            <Zap className="logo-icon" />
-            <span className="logo-text">TaskFlow</span>
-          </div>
-        </div>
-
-        <nav className="nav">
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <div className="nav-icon-grid" />
-            Dashboard
-          </NavLink>
-
-          <NavLink
-            to="/tasks"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <CheckSquare size={20} />
-            Tasks
-          </NavLink>
-
-          <NavLink
-            to="/client"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <Building2 size={20} />
-            Clients
-          </NavLink>
-
-          <NavLink
-            to="/team"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <Users size={20} />
-            Users
-          </NavLink>
-
-          <NavLink
-            to="/calender"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <Calendar size={20} />
-            Calendar
-          </NavLink>
-
-          <NavLink
-            to="/analytics"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <TrendingUp size={20} />
-            Analytics
-          </NavLink>
-        </nav>
-
-        <div className="sidebar-footer">
-          <NavLink to="/settings" className="nav-item">
-            <Settings size={20} />
-            Settings
-          </NavLink>
-
-          <div className="user-profile">
-            <div className="user-avatar">{initials}</div>
-            <div className="user-info">
-              <div className="user-name">{fullName}</div>
-              <div className="user-role">User</div>
-            </div>
-
-            <SignOutButton>
-              <LogOut size={16} className="logout-icon" />
-            </SignOutButton>
-          </div>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* ================= MAIN ================= */}
       <main className="main-content">
@@ -333,9 +250,10 @@ const Task = () => {
                     statusTasks.map((task) => (
                       <div key={task._id} className="task-item">
                         <div className="task-item-header">
-                          <h3 className="task-item-title">
-                            {task.platform} • {task.task_type}
-                          </h3>
+                          <div className="task-title-section">
+                            <h3 className="task-item-title">{task.taskname}</h3>
+                            <p className="task-subtitle">{task.platform} • {task.task_type}</p>
+                          </div>
                           <span
                             className={`task-status-badge ${getStatusColor(
                               task.status
@@ -346,7 +264,7 @@ const Task = () => {
                         </div>
 
                         <p className="task-client">
-                          {task.client_id?.name}
+                          Client: {task.client_id?.name}
                         </p>
 
                         <div className="task-tags">
@@ -376,10 +294,10 @@ const Task = () => {
                         </div>
 
                         <div className="task-actions">
-                          <button onClick={() => handleEdit(task)}>
+                          <button onClick={() => handleEdit(task)} title="Edit Task">
                             <Edit2 size={14} />
                           </button>
-                          <button onClick={() => handleDelete(task._id)}>
+                          <button onClick={() => handleDelete(task._id)} title="Delete Task">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -405,78 +323,137 @@ const Task = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="modal-form">
-              <select
-                required
-                value={formData.client_id}
-                onChange={(e) =>
-                  setFormData({ ...formData, client_id: e.target.value })
-                }
-              >
-                <option value="">Select Client</option>
-                {clients.map((c) => (
-                  <option key={c._id} value={c._id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
+              <div className="form-group">
+                <label>Task Name *</label>
+                <input
+                  type="text"
+                  placeholder="Enter task name"
+                  required
+                  value={formData.taskname}
+                  onChange={(e) =>
+                    setFormData({ ...formData, taskname: e.target.value })
+                  }
+                />
+              </div>
 
-              <select
-                required
-                value={formData.assigned_to}
-                onChange={(e) =>
-                  setFormData({ ...formData, assigned_to: e.target.value })
-                }
-              >
-                <option value="">Assign To</option>
-                {users.map((u) => (
-                  <option key={u._id} value={u._id}>
-                    {u.name}
-                  </option>
-                ))}
-              </select>
+              <div className="form-group">
+                <label>Client *</label>
+                <select
+                  required
+                  value={formData.client_id}
+                  onChange={(e) =>
+                    setFormData({ ...formData, client_id: e.target.value })
+                  }
+                >
+                  <option value="">Select Client</option>
+                  {clients.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <select
-                value={formData.platform}
-                onChange={(e) =>
-                  setFormData({ ...formData, platform: e.target.value })
-                }
-              >
-                <option>Instagram</option>
-                <option>Facebook</option>
-                <option>LinkedIn</option>
-                <option>Website</option>
-              </select>
+              <div className="form-group">
+                <label>Assigned To *</label>
+                <select
+                  required
+                  value={formData.assigned_to}
+                  onChange={(e) =>
+                    setFormData({ ...formData, assigned_to: e.target.value })
+                  }
+                >
+                  <option value="">Assign To</option>
+                  {users.map((u) => (
+                    <option key={u._id} value={u._id}>
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <select
-                value={formData.task_type}
-                onChange={(e) =>
-                  setFormData({ ...formData, task_type: e.target.value })
-                }
-              >
-                <option>Post</option>
-                <option>Reel</option>
-                <option>Blog</option>
-              </select>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Platform *</label>
+                  <select
+                    value={formData.platform}
+                    onChange={(e) =>
+                      setFormData({ ...formData, platform: e.target.value })
+                    }
+                  >
+                    <option>Instagram</option>
+                    <option>Facebook</option>
+                    <option>LinkedIn</option>
+                    <option>Website</option>
+                  </select>
+                </div>
 
-              <input
-                type="date"
-                required
-                value={formData.due_date}
-                onChange={(e) =>
-                  setFormData({ ...formData, due_date: e.target.value })
-                }
-              />
+                <div className="form-group">
+                  <label>Task Type *</label>
+                  <select
+                    value={formData.task_type}
+                    onChange={(e) =>
+                      setFormData({ ...formData, task_type: e.target.value })
+                    }
+                  >
+                    <option>Post</option>
+                    <option>Reel</option>
+                    <option>Blog</option>
+                  </select>
+                </div>
 
-              <textarea
-                placeholder="Notes"
-                value={formData.notes}
-                onChange={(e) =>
-                  setFormData({ ...formData, notes: e.target.value })
-                }
-              />
+                <div className="form-group">
+                  <label>Status</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) =>
+                      setFormData({ ...formData, status: e.target.value })
+                    }
+                  >
+                    <option>Pending</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+              </div>
 
-              <button className="btn-primary" disabled={submitting}>
-                {submitting ? "Saving..." : "Save Task"}
+              <div className="form-group">
+                <label>Due Date *</label>
+                <input
+                  type="date"
+                  required
+                  value={formData.due_date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, due_date: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Post Link</label>
+                <input
+                  type="url"
+                  placeholder="https://..."
+                  value={formData.post_link}
+                  onChange={(e) =>
+                    setFormData({ ...formData, post_link: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Notes</label>
+                <textarea
+                  placeholder="Additional notes..."
+                  value={formData.notes}
+                  onChange={(e) =>
+                    setFormData({ ...formData, notes: e.target.value })
+                  }
+                />
+              </div>
+
+              <button className="btn-primary" disabled={submitting} type="submit">
+                {submitting ? "Saving..." : editingTask ? "Update Task" : "Create Task"}
               </button>
             </form>
           </div>

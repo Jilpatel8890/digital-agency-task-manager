@@ -20,8 +20,8 @@ import {
 
 import { useAuth } from "@clerk/clerk-react";
 import { NavLink } from "react-router-dom";
-import { fetchUsers, createUser, updateUser, deleteUser, inviteUser } from "../../api/UserApi";
-import Sidebar from "./Sidebar";
+import { fetchUsers, createUser, updateUser, deleteUser } from "../../api/UserApi";
+import Sidebar from "../auth/Sidebar";
 
 import "../../Styles/Team.css";
 
@@ -123,18 +123,6 @@ const TeamPage = () => {
     }
   };
 
-  /* ================= INVITE ================= */
-  const handleInvite = async (id) => {
-    try {
-      const token = await getToken();
-      await inviteUser(id, token);
-      alert("Invitation sent successfully");
-    } catch (err) {
-      console.error("Invite failed", err);
-      alert(err.message || "Failed to send invitation");
-    }
-  };
-
   /* ================= FILTER ================= */
   const filteredMembers = teamMembers.filter(
     (member) =>
@@ -159,12 +147,12 @@ const TeamPage = () => {
 
   const getRoleDisplayName = (role) => {
     if (!role) return "No Role";
-    return role.charAt(0).toUpperCase() + role.slice(1);
+    return role.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   };
 
   const getRoleClassName = (role) => {
     if (!role) return "role-badge role-none";
-    return `role-badge role-${role}`;
+    return `role-badge role-${role.replace(/\s+/g, '-')}`;
   };
 
   return (
@@ -262,15 +250,6 @@ const TeamPage = () => {
                         >
                           <Mail size={16} />
                         </button>
-                        {!member.clerkUserId && (
-                          <button
-                            className="action-btn action-btn-invite"
-                            onClick={() => handleInvite(member._id)}
-                            title="Send invitation"
-                          >
-                            <Send size={16} />
-                          </button>
-                        )}
                         <button
                           className="action-btn action-btn-delete"
                           onClick={() => handleDelete(member._id)}

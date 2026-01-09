@@ -180,15 +180,25 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .task-title-section {
+    flex: 1;
   }
   
   .task-item-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: #1d1d1f;
     line-height: 1.4;
-    flex: 1;
+    margin: 0 0 4px 0;
+  }
+  
+  .task-subtitle {
+    font-size: 13px;
+    color: #6e6e73;
+    margin: 0;
   }
   
   .task-status-badge {
@@ -298,6 +308,156 @@
   
   .task-date {
     color: #dc2626;
+  }
+  
+  .task-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: flex-end;
+  }
+  
+  .task-actions button {
+    padding: 6px;
+    border: 1px solid #e5e5e7;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .task-actions button:hover {
+    background: #f5f5f7;
+    border-color: #d1d1d6;
+  }
+  
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #e5e5e7;
+  }
+  
+  .modal-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 0;
+  }
+  
+  .modal-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  
+  .modal-header button:hover {
+    background: #f5f5f7;
+  }
+  
+  .modal-form {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1d1d1f;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .modal-form input,
+  .modal-form select,
+  .modal-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e5e7;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  
+  .modal-form input:focus,
+  .modal-form select:focus,
+  .modal-form textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  .modal-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .modal-form button[type="submit"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 8px;
+    align-self: flex-start;
+  }
+  
+  .modal-form button[type="submit"]:hover {
+    transform: translateY(-1px);
+  }
+  
+  .modal-form button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
   
   .task-link {

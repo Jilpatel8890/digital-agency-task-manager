@@ -14,13 +14,13 @@ import {
 const router = express.Router();
 
 /**
- * Create client (Admin / Manager)
+ * Create client (Manager)
  */
 router.post(
   "/",
   clerkAuth,
   loadUser,
-  requireRole(["admin", "manager"]),
+  requireRole(["manager"]),
   createClient
 );
 
@@ -32,7 +32,7 @@ router.put(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin", "manager"]),
+  requireRole(["manager"]),
   updateClient
 );
 
@@ -40,7 +40,7 @@ router.delete(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin", "manager"]),
+  requireRole(["manager"]),
   deleteClient
 );
 

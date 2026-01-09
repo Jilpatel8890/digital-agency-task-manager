@@ -5,11 +5,13 @@ import clerkAuth from "../middleware/clerkAuth.js";
 const router = express.Router();
 
 router.get("/me", clerkAuth, async (req, res) => {
+  console.log("/me req.auth.userId:", req.auth.userId);
   if (!req.auth?.userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   const user = await User.findOne({ clerkUserId: req.auth.userId });
+  console.log("/me user found:", user);
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });

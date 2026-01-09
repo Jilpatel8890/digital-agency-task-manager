@@ -625,3 +625,168 @@
       gap: 16px;
     }
   }
+
+/* Analytics specific styles */
+.platform-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.platform-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.platform-name {
+  width: 120px;
+  font-weight: 500;
+  color: #374151;
+  text-transform: capitalize;
+}
+
+.platform-bar {
+  flex: 1;
+  height: 12px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.platform-progress {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.platform-stats {
+  width: 100px;
+  text-align: right;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.client-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.client-item {
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+}
+
+.client-name {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.client-stats {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.completed {
+  color: #059669;
+  font-weight: 500;
+}
+
+.pending {
+  color: #d97706;
+  font-weight: 500;
+}
+
+/* Analytics card styles */
+.analytics-card {
+  background: white;
+  border: 1px solid #e5e5e7;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 16px;
+}
+
+.platform-label {
+  width: 120px;
+  font-weight: 500;
+  color: #374151;
+  text-transform: capitalize;
+}
+
+.platform-bar-container {
+  flex: 1;
+}
+
+.platform-bar {
+  height: 12px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.platform-progress {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.platform-count {
+  width: 100px;
+  text-align: right;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Client table styles */
+.client-table {
+  border: 1px solid #e5e5e7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px 24px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e5e7;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s;
+}
+
+.table-row:hover {
+  background: #f9fafb;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.client-name {
+  font-weight: 500;
+  color: #111827;
+}

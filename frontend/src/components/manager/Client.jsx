@@ -24,6 +24,7 @@ import {
   updateClient,
   deleteClient,
 } from "../../api/ClientApi";
+import Sidebar from "../auth/Sidebar";
 
 import "../../Styles/Client.css";
 
@@ -150,63 +151,7 @@ const ClientsPage = () => {
 
   return (
     <div className="app">
-      {/* ================= SIDEBAR ================= */}
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="logo">
-            <Zap className="logo-icon" />
-            <span className="logo-text">TaskFlow</span>
-          </div>
-        </div>
-
-        <nav className="nav">
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            Dashboard
-          </NavLink>
-
-          <NavLink to="/tasks" className="nav-item">
-            <CheckSquare size={20} /> Tasks
-          </NavLink>
-
-          <NavLink
-            to="/client"
-            className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
-          >
-            <Building2 size={20} /> Clients
-          </NavLink>
-
-          <NavLink to="/team" className="nav-item">
-            <Users size={20} /> Users
-          </NavLink>
-
-          <NavLink to="/calender" className="nav-item">
-            <Calendar size={20} /> Calendar
-          </NavLink>
-
-          <NavLink to="/analytics" className="nav-item">
-            <TrendingUp size={20} /> Analytics
-          </NavLink>
-        </nav>
-
-        <div className="sidebar-footer">
-          <NavLink to="/settings" className="nav-item">
-            <Settings size={20} /> Settings
-          </NavLink>
-
-          <div className="user-profile">
-            <div className="user-avatar">AT</div>
-            <div className="user-info">
-              <div className="user-name">Admin</div>
-              <div className="user-role">Administrator</div>
-            </div>
-            <LogOut size={16} />
-          </div>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* ================= MAIN ================= */}
       <main className="main-content">

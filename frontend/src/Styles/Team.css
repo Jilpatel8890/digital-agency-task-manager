@@ -304,14 +304,12 @@ body {
   text-transform: capitalize;
 }
 
-.role-admin {
+.role-manager,
+.role-content-writer,
+.role-graphic-designer,
+.role-social-media-manager {
   background: #1d1d1f;
   color: white;
-}
-
-.role-team {
-  background: #dbeafe;
-  color: #1e40af;
 }
 
 .role-none {

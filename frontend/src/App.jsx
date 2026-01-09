@@ -2,12 +2,14 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import AuthGuard from "./components/auth/AuthGuard";
+import ManagerGuard from "./components/auth/ManagerGuard";
 import SyncUser from "./components/auth/SyncUser";
-import Dashboard from "./components/auth/Dashboard";
-import ClientsPage from "./components/auth/Client";
-import TeamPage from "./components/auth/Team";
-import Task from "./components/auth/Task";
-import Calender from "./components/auth/Calender";
+import DashboardPage from "./pages/manager/Dashboard";
+import ClientPage from "./pages/manager/Client";
+import TeamPage from "./pages/manager/Team";
+import TaskPage from "./pages/manager/Task";
+import CalenderPage from "./pages/manager/Calender";
+import AnalyticsPage from "./pages/manager/Analytics";
 function App() {
   return (
     <>
@@ -20,44 +22,52 @@ function App() {
         <Route
           path="/"
           element={
-            <AuthGuard>
-              <Dashboard />
-            </AuthGuard>
+            <ManagerGuard>
+              <DashboardPage />
+            </ManagerGuard>
           }
         />
 
         <Route
           path="/client"
           element={
-            <AuthGuard>
-              <ClientsPage />
-            </AuthGuard>
+            <ManagerGuard>
+              <ClientPage />
+            </ManagerGuard>
           }
         />
 
         <Route
           path="/team"
           element={
-            <AuthGuard>
+            <ManagerGuard>
               <TeamPage />
-            </AuthGuard>
+            </ManagerGuard>
           }
         />
 
         <Route
           path="/tasks"
           element={
-            <AuthGuard>
-              <Task />
-            </AuthGuard>
+            <ManagerGuard>
+              <TaskPage />
+            </ManagerGuard>
           }
         />
         <Route
           path="/calender"
           element={
-            <AuthGuard>
-              <Calender />
-            </AuthGuard>
+            <ManagerGuard>
+              <CalenderPage />
+            </ManagerGuard>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ManagerGuard>
+              <AnalyticsPage />
+            </ManagerGuard>
           }
         />
       </Routes>

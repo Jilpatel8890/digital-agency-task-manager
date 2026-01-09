@@ -3,6 +3,7 @@ import clerkAuth from "../middleware/clerkAuth.js";
 import { loadUser } from "../middleware/loaduser.js";
 import { requireRole } from "../middleware/requireRole.js";
 import User from "../models/user.js";
+import { clerkClient } from "@clerk/clerk-sdk-node";
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get(
   "/",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   async (req, res) => {
     try {
       const users = await User.find().sort({ createdAt: -1 });
@@ -26,8 +27,9 @@ router.post(
   "/",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   async (req, res) => {
+    console.log("Creating user:", req.body);
     try {
       const { name, email, role, approved } = req.body;
 
@@ -40,6 +42,17 @@ router.post(
       if (existingUser) {
         return res.status(400).json({ message: "User with this email already exists" });
       }
+
+      // Create invitation in Clerk
+      // try {
+      //   const invitation = await clerkClient.invitations.createInvitation({
+      //     emailAddress: email,
+      //   });
+      //   console.log("Invitation created:", invitation);
+      // } catch (inviteErr) {
+      //   console.error("Failed to create invitation:", inviteErr);
+      //   // Continue creating user even if invitation fails
+      // }
 
       const user = await User.create({
         name,
@@ -60,7 +73,7 @@ router.put(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   async (req, res) => {
     try {
       const { name, approved, role } = req.body;
@@ -91,7 +104,7 @@ router.delete(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
@@ -105,6 +118,42 @@ router.delete(
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Failed to delete user" });
+    }
+  }
+);
+
+router.post(
+  "/invite/:id",
+  clerkAuth,
+  loadUser,
+  requireRole(["manager"]),
+  async (req, res) => {
+    console.log("Inviting user:", req.params.id);
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      console.log("User found:", user.email);
+
+      // Check if user already has clerkUserId
+      if (user.clerkUserId) {
+        return res.status(400).json({ message: "User already has Clerk account" });
+      }
+
+      // Create invitation in Clerk
+      console.log("Creating invitation for:", user.email);
+      const invitation = await clerkClient.invitations.createInvitation({
+        emailAddress: user.email,
+        redirectUrl: process.env.CLERK_REDIRECT_URL || "http://localhost:5173",
+      });
+      console.log("Invitation created:", invitation);
+
+      res.json({ message: "Invitation sent successfully" });
+    } catch (err) {
+      console.error("Invite error:", err);
+      res.status(500).json({ message: "Failed to send invitation" });
     }
   }
 );

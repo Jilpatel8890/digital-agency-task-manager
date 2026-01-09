@@ -16,7 +16,7 @@ router.post(
   "/",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   createTask
 );
 
@@ -26,7 +26,7 @@ router.put(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   updateTask
 );
 
@@ -34,7 +34,7 @@ router.delete(
   "/:id",
   clerkAuth,
   loadUser,
-  requireRole(["admin"]),
+  requireRole(["manager"]),
   deleteTask
 );
 

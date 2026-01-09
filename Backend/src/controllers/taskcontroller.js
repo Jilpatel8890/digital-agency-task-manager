@@ -3,11 +3,12 @@ import Client from "../models/client.js";
 import User from "../models/user.js";
 
 /**
- * CREATE TASK (Admin only)
+ * CREATE TASK (Manager only)
  */
 export const createTask = async (req, res) => {
   try {
     const {
+      taskname,
       client_id,
       assigned_to,
       platform,
@@ -18,7 +19,7 @@ export const createTask = async (req, res) => {
       notes,
     } = req.body;
 
-    if (!client_id || !assigned_to || !platform || !task_type || !due_date) {
+    if (!taskname || !client_id || !assigned_to || !platform || !task_type || !due_date) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -36,13 +37,14 @@ export const createTask = async (req, res) => {
       _id: assigned_to,
       approved: true,
       isActive: true,
-      role: "team",
+      role: { $in: ["content writer", "graphic designer", "social media manager"] },
     });
     if (!user) {
       return res.status(400).json({ message: "Invalid or inactive team member" });
     }
 
     const task = await Task.create({
+      taskname,
       client_id,
       assigned_to,
       platform,
@@ -68,7 +70,7 @@ export const createTask = async (req, res) => {
 export const getAllTasks = async (req, res) => {
   try {
     const filter =
-      req.user.role === "team"
+      ["content writer", "graphic designer", "social media manager"].includes(req.user.role)
         ? { assigned_to: req.user._id }
         : {};
 
